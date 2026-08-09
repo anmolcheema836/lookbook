@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anmol Cheema | Full-Stack Developer & Designer</title>
+    
+    <style>
+        /* ==========================================
+           1. FONT FACES
+           ========================================== */
+        
+        @font-face {
+            font-family: 'Humane';
+            src: url('HUMANE Typeface/Web-TT/Humane-Bold.ttf') format('truetype');
+            font-weight: 700;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Humane';
+            src: url('HUMANE Typeface/Web-TT/Humane-Medium.ttf') format('truetype');
+            font-weight: 500;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Humane';
+            src: url('HUMANE Typeface/Web-TT/Humane-Regular.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'NeueMontreal';
+            src: url('neue-montreal-free-demo-pangram-pangram-030418/NeueMontreal-Bold.otf') format('opentype');
+            font-weight: 700;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'NeueMontreal';
+            src: url('neue-montreal-free-demo-pangram-pangram-030418/NeueMontreal-Medium.otf') format('opentype');
+            font-weight: 500;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'NeueMontreal';
+            src: url('neue-montreal-free-demo-pangram-pangram-030418/NeueMontreal-Regular.otf') format('opentype');
+            font-weight: 400;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'NeueMontreal';
+            src: url('neue-montreal-free-demo-pangram-pangram-030418/NeueMontreal-Light.otf') format('opentype');
+            font-weight: 300;
+            font-style: normal;
+        }
+
+        /* ==========================================
+           2. CSS VARIABLES & RESET
+           ========================================== */
+        :root {
+            --bg-color: #f4f4f4;
+            --text-color: #111;
+            --font-display: 'Humane', sans-serif;
+            --font-body: 'NeueMontreal', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            font-size: 1.2rem; 
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* Lenis Smooth Scroll */
+        html.lenis { height: auto; }
+        .lenis.lenis-smooth { scroll-behavior: auto; }
+        .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+        .lenis.lenis-stopped { overflow: hidden; }
+        .lenis.lenis-scrolling iframe { pointer-events: none; }
+
+        /* Text Animation Utility Classes */
+        .char-wrap, .word-wrap {
+            overflow: hidden;
+            display: inline-block;
+            vertical-align: top;
+        }
+        .char-inner, .word-inner {
+            display: inline-block;
+            transform: translateY(110%);
+            will-change: transform;
+        }
+        .space-char {
+            display: inline-block;
+            width: 0.1em;
+        }
+
+        /* ==========================================
+           3. NAVIGATION
+           ========================================== */
+        .main-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            mix-blend-mode: difference;
+            color: white;
+        }
+
+        .logo {
+            font-family: var(--font-display); 
+            font-weight: 700;
+            font-size: 4rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            line-height: 0.8;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            font-family: var(--font-body); 
+            font-size: 1.1rem;
+            font-weight: 400;
+            text-transform: capitalize;
+        }
+
+        /* ==========================================
+           4. HERO SECTION
+           ========================================== */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            padding-top: 5vh;
+        }
+
+        .marquee-wrapper {
+            width: 100%;
+        }
+
+        .marquee-row {
+            overflow: hidden;
+            font-family: var(--font-display); 
+            font-weight: 700;
+            font-size: 12vw; 
+            line-height: 1;
+            text-transform: uppercase;
+            color: var(--text-color);
+            margin-bottom: -6vh; 
+            cursor: default;
+        }
+
+        .hero .marquee-row:nth-child(3) {
+            position: relative;
+            z-index: 20;
+            mix-blend-mode: difference;
+            color: white;
+        }
+
+        .marquee-content {
+            display: flex;
+            width: max-content;
+            animation: marquee 20s linear infinite;
+        }
+
+        .marquee-text {
+            white-space: nowrap;
+        }
+
+        .marquee-row.reverse .marquee-content {
+            animation-direction: reverse;
+        }
+
+        .marquee-row:hover .marquee-content {
+            animation-play-state: paused;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Refined Hero Image with Masked Transparency */
+        .hero-center-img {
+            position: absolute;
+            top: 25%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 22vw;
+            height: 30vw;
+            background: transparent; 
+            z-index: 10;
+            overflow: hidden;
+            opacity: 0.85; 
+            transition: opacity 0.4s ease;
+            
+            /* Fades the top 20% of the image to transparent */
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%);
+            mask-image: linear-gradient(to bottom, transparent 0%, black 20%);
+        }
+
+        .hero-center-img::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            backdrop-filter: invert(1) hue-rotate(180deg);
+            -webkit-backdrop-filter: invert(1) hue-rotate(180deg);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+
+        .hero-center-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: filter 0.4s ease;
+        }
+
+        .hero-center-img:hover {
+            opacity: 1; 
+        }
+
+        .hero-center-img:hover::after {
+            opacity: 1;
+        }
+        
+        .hero-center-img:hover img {
+            filter: grayscale(0%);
+        }
+
+        /* Hero Meta Bar (Time & Status) */
+        .hero-meta {
+            position: absolute;
+            bottom: 2rem;
+            left: 4rem;
+            right: 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--font-body); 
+            font-size: 0.9rem;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            z-index: 30;
+            mix-blend-mode: difference;
+            color: white;
+        }
+
+        .meta-left {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .meta-right {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .glowing-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #00ff00;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00ff00;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 255, 0, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 255, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 255, 0, 0); }
+        }
+
+        /* ==========================================
+           5. ABOUT SECTION
+           ========================================== */
+        .about {
+            padding: 15rem 4rem;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            position: relative;
+            z-index: 30;
+            background: var(--bg-color);
+            font-family: var(--font-body); 
+        }
+
+        .section-label {
+            font-size: 1.1rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .about-text h2 {
+            font-size: 2.8rem;
+            font-weight: 400;
+            line-height: 1.25;
+            margin-bottom: 3rem;
+            letter-spacing: -0.5px;
+        }
+
+        .about-subtext {
+            font-size: 1.4rem;
+            font-weight: 300;
+            max-width: 600px;
+            color: #555;
+            line-height: 1.4;
+            margin-left: auto;
+        }
+
+        /* ==========================================
+           6. FEATURED WORK SECTION
+           ========================================== */
+        .work-section {
+            position: relative;
+            padding: 0 4rem;
+            margin-top: 5rem;
+            font-family: var(--font-body);
+        }
+
+        .work-bg-text {
+            position: sticky;
+            top: 50%;
+            transform: translateY(-50%);
+            font-weight: 700;
+            font-size: 8vw; 
+            text-transform: uppercase;
+            text-align: center;
+            z-index: 1;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+            color: var(--text-color);
+            line-height: 0.8;
+            letter-spacing: -2px;
+        }
+
+        .projects-list {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 25vh;
+            padding-bottom: 20vh;
+            margin-top: -10vh;
+        }
+
+        .project-wrapper {
+            position: relative;
+            width: 45%;
+            cursor: pointer;
+        }
+        
+        .project-wrapper.left { margin-right: auto; }
+        .project-wrapper.right { margin-left: auto; }
+
+        .video-container {
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .video-container video {
+            width: 100%;
+            display: block;
+            background: #ddd;
+        }
+
+        .proj-title, .proj-desc {
+            position: absolute;
+            font-size: 1.1rem;
+            font-weight: 500;
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+            color: var(--text-color);
+            letter-spacing: 0.5px;
+        }
+
+        .proj-title {
+            top: -2.5rem;
+            left: 0;
+            transform: translateY(20px);
+        }
+
+        .proj-desc {
+            top: 2rem;
+            left: -3rem;
+            transform: rotate(-90deg) translateX(-20px);
+            transform-origin: left top;
+        }
+
+        .view-project-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            background: rgba(255, 255, 255, 0.9);
+            color: #000;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 1rem;
+            text-transform: capitalize;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .project-wrapper:hover .proj-title { opacity: 1; transform: translateY(0); }
+        .project-wrapper:hover .proj-desc { opacity: 1; transform: rotate(-90deg) translateX(0); }
+        .project-wrapper:hover .view-project-btn { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+
+        /* ==========================================
+           7. STATEMENT SECTION
+           ========================================== */
+        .statement-section {
+            padding: 10rem 4rem;
+            background: var(--bg-color);
+            position: relative;
+            z-index: 10;
+            font-family: var(--font-body); 
+        }
+
+        .statement-text {
+            font-size: 2.5vw; 
+            font-weight: 400;
+            line-height: 1.3;
+            max-width: 85%;
+            margin: 0 auto;
+            text-align: justify;
+        }
+
+        /* ==========================================
+           8. SERVICES SECTION
+           ========================================== */
+        .services-section {
+            padding: 5rem 4rem 15rem 4rem;
+            background: var(--bg-color);
+            position: relative;
+            z-index: 10;
+            font-family: var(--font-body);
+        }
+
+        .services-staircase {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            margin-top: 4rem;
+        }
+
+        .service-row {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            margin-bottom: 2rem; 
+        }
+
+        .service-row:nth-child(odd) { align-items: flex-start; }
+        .service-row:nth-child(even) { align-items: flex-end; }
+
+        .service-title-container {
+            display: flex;
+            align-items: center;
+            font-size: 7vw;
+            font-weight: 700;
+            line-height: 0.9;
+            text-transform: uppercase;
+            color: #1c1c24; 
+            letter-spacing: -2px;
+        }
+
+        .service-title-container span.close-btn {
+            font-size: 0.7rem; 
+            font-weight: 400;
+            color: #999;
+            margin-right: 1.5rem;
+            text-transform: lowercase;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            letter-spacing: 0;
+            align-self: center;
+        }
+
+        .service-row.active .service-title-container span.close-btn {
+            opacity: 1;
+        }
+
+        .service-img-wrapper {
+            display: inline-flex;
+            align-items: center;
+            margin: 0 1vw;
+            cursor: pointer;
+            position: relative;
+            transition: transform 0.3s ease;
+            letter-spacing: 0;
+        }
+        
+        .service-img-wrapper:hover {
+            transform: scale(1.05);
+        }
+
+        .service-img-wrapper img {
+            width: 8vw;
+            height: 5vw;
+            object-fit: cover;
+            border-radius: 8px;
+            margin: 0 0.5vw;
+        }
+
+        .service-desc {
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            color: #888;
+            letter-spacing: 2px;
+            height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(-20px);
+        }
+
+        .service-row.active .service-desc {
+            height: 2rem;
+            opacity: 1;
+            margin-top: 1rem;
+            transform: translateY(0);
+        }
+
+        .creator-text {
+            margin-top: 10rem;
+            font-size: 1.6rem;
+            font-weight: 300;
+            line-height: 1.5;
+            max-width: 1200px;
+            color: var(--text-color);
+        }
+
+        /* ==========================================
+           9. FOOTER SECTION
+           ========================================== */
+        .footer {
+            background: #0a0a0a;
+            color: #fff;
+            padding: 4rem 4rem 2rem 4rem;
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .footer-top-text {
+            font-family: var(--font-body); 
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #777;
+            margin-top: 2rem;
+        }
+
+        .footer-giant-title {
+            font-family: var(--font-display); 
+            font-weight: 700;
+            font-size: 20vw;
+            line-height: 1;
+            text-transform: uppercase;
+            margin-top: auto; 
+            margin-bottom: 4rem;
+        }
+
+        .footer-divider {
+            width: 100%;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.15);
+            margin: 1rem 0;
+        }
+
+        .footer-contacts-row {
+            display: flex;
+            justify-content: space-between; 
+            align-items: center;
+            padding: 2rem 0;
+            font-family: var(--font-body);
+        }
+
+        .footer-contacts-row a {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: #fff;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-contacts-row .email-link { text-align: left; }
+        .footer-contacts-row .phone-link { text-align: right; }
+        .footer-contacts-row a:hover { color: #888; }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: auto;
+            padding-top: 2rem;
+        }
+
+        .footer-nav {
+            display: flex;
+            gap: 4rem; 
+            justify-content: center;
+            flex: 1; 
+        }
+
+        .footer-nav a { transition: color 0.3s ease; }
+        .footer-nav a:hover { color: #fff; }
+
+        /* ==========================================
+           10. RESPONSIVE DESIGN (MOBILE OVERRIDES)
+           ========================================== */
+        @media (max-width: 768px) {
+            /* Navigation */
+            .main-nav { padding: 1.5rem; }
+            .logo { font-size: 3rem; }
+            .nav-links { display: none; }
+            
+            /* Hero Section */
+            .marquee-row { font-size: 18vw; margin-bottom: 6vh; }
+            .hero-center-img { 
+                width: 65vw; 
+                height: 85vw; 
+                top: 50%; 
+                opacity: 1; /* Always fully visible on mobile */
+            }
+            .hero-center-img img { filter: grayscale(0%); } /* Always full color on mobile */
+            .hero-center-img::after { opacity: 0 !important; } /* Prevent hover backdrop mask */
+            
+            .hero-meta { 
+                flex-direction: column; 
+                align-items: flex-start; 
+                gap: 0.8rem; 
+                left: 1.5rem; 
+                right: 1.5rem; 
+                bottom: 1.5rem; 
+                font-size: 0.75rem; 
+            }
+
+            /* About Section */
+            .about { 
+                grid-template-columns: 1fr; 
+                padding: 6rem 1.5rem; 
+                gap: 2rem; 
+            }
+            .about-text h2 { font-size: 2rem; margin-bottom: 1.5rem; }
+            .about-subtext { font-size: 1.1rem; margin-left: 0; }
+
+            /* Work Section */
+            .work-section { padding: 0 1.5rem; margin-top: 2rem; }
+            .work-bg-text { font-size: 16vw; }
+            .projects-list { gap: 8vh; padding-bottom: 10vh; margin-top: 2vh; }
+            .project-wrapper { width: 100%; margin: 0 auto !important; }
+            
+            /* Show project labels persistently under the video on mobile */
+            .proj-title, .proj-desc {
+                position: relative !important;
+                display: block;
+                opacity: 1 !important;
+                transform: none !important;
+                top: auto !important;
+                left: auto !important;
+                margin-top: 0.8rem;
+            }
+            .proj-desc {
+                margin-top: 0.2rem;
+                color: #555;
+            }
+            .view-project-btn { display: none; } /* Mobile relies on full card tap */
+
+            /* Statement */
+            .statement-section { padding: 6rem 1.5rem; }
+            .statement-text { font-size: 6vw; max-width: 100%; }
+
+            /* Services */
+            .services-section { padding: 5rem 1.5rem; }
+            .service-row { align-items: flex-start !important; margin-bottom: 1.5rem; }
+            .service-title-container { 
+                font-size: 11vw; 
+                flex-wrap: wrap; 
+                letter-spacing: -1px;
+            }
+            .service-title-container span.close-btn {
+                margin-right: 0.5rem;
+                font-size: 0.8rem;
+            }
+            .service-img-wrapper img {
+                width: 18vw; 
+                height: 12vw; 
+                margin: 0 1vw;
+            }
+            .service-desc { font-size: 0.8rem; }
+            .creator-text { font-size: 1.2rem; margin-top: 5rem; }
+
+            /* Footer */
+            .footer { padding: 4rem 1.5rem 2rem 1.5rem; }
+            .footer-giant-title { font-size: 22vw;   margin-bottom: 2rem; }
+            .footer-contacts-row { 
+                flex-direction: column; 
+                gap: 1.5rem; 
+                align-items: flex-start; 
+            }
+            .footer-contacts-row a { font-size: 1.8rem; text-align: left; }
+            .footer-bottom { 
+                flex-direction: column; 
+                gap: 2rem; 
+                align-items: flex-start; 
+                text-align: left; 
+            }
+            .footer-nav { 
+                gap: 1rem; 
+                flex-direction: column; 
+                align-items: flex-start; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="main-nav">
+        <div class="logo">
+            <div class="anim-letters">Anmol</div>
+            <div class="anim-letters">Cheema</div>
+        </div>
+        <div class="nav-links">
+            <a href="#about" class="anim-words">About</a>
+            <a href="#work" class="anim-words">Projects</a>
+            <a href="#contact" class="anim-words">Contact</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="marquee-row">
+            <div class="marquee-wrapper wrapper-1">
+                <div class="marquee-content">
+                    <span class="marquee-text anim-letters">FRONTEND DEVELOPER • UX/UI DESIGNER • CREATIVE • FRONTEND DEVELOPER • UX/UI DESIGNER • CREATIVE •&nbsp;</span>
+                    <span class="marquee-text anim-letters">FRONTEND DEVELOPER • UX/UI DESIGNER • CREATIVE • FRONTEND DEVELOPER • UX/UI DESIGNER • CREATIVE •&nbsp;</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="marquee-row reverse">
+            <div class="marquee-wrapper wrapper-2">
+                <div class="marquee-content">
+                    <span class="marquee-text anim-letters">UX/UI DESIGNER • CREATIVE • FRONTEND DEVELOPER • UX/UI DESIGNER • CREATIVE • FRONTEND DEVELOPER •&nbsp;</span>
+                    <span class="marquee-text anim-letters">UX/UI DESIGNER • CREATIVE • FRONTEND DEVELOPER • UX/UI DESIGNER • CREATIVE • FRONTEND DEVELOPER •&nbsp;</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="marquee-row">
+            <div class="marquee-wrapper wrapper-3">
+                <div class="marquee-content">
+                    <span class="marquee-text anim-letters">CREATIVE • FRONTEND DEVELOPER • UX/UI DESIGNER • CREATIVE • FRONTEND DEVELOPER • UX/UI DESIGNER •&nbsp;</span>
+                    <span class="marquee-text anim-letters">CREATIVE • FRONTEND DEVELOPER • UX/UI DESIGNER • CREATIVE • FRONTEND DEVELOPER • UX/UI DESIGNER •&nbsp;</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-image-wrapper">
+            <div class="hero-center-img gs-up" data-intro="portrait" style="clip-path: inset(0%);">
+                <img alt="Anmol Cheema Portrait" fetchpriority="high" decoding="async" data-nimg="fill" style="position:absolute;height:100%;width:100%;left:0;top:0;right:0;bottom:0;object-fit:cover;color:transparent" src="profile.png">
+                <canvas style="position: absolute; inset: 0px; width: 100%; height: 100%; opacity: 0; pointer-events: none;"></canvas>
+            </div>
+        </div>
+
+        <div class="hero-meta">
+            <div class="meta-left">
+                <span class="anim-words">BASED IN INDIA •</span>
+                <span class="space-char">&nbsp;</span>
+                <span id="ist-clock">Loading...</span>
+            </div>
+            <div class="meta-right">
+                <div class="glowing-dot"></div>
+                <span class="anim-words">OPEN TO WORK</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <div>
+            <div class="section-label anim-words">(01) <br><br> ABOUT</div>
+        </div>
+        <div class="about-text">
+            <h2 class="anim-words">I design and develop digital experiences with a focus on craft, motion, and interaction — creating interfaces where every detail is intentional.</h2>
+            <div class="about-subtext anim-words">
+                Based in India, I work at the intersection of creativity and technology. From concept to code, I bring ideas to life with meticulous attention to detail.
+            </div>
+        </div>
+    </section>
+
+    <section class="work-section" id="work">
+        <div class="work-bg-text anim-letters">FEATURED WORK</div>
+        <div class="projects-list">
+            <div class="project-wrapper left" onclick="window.open('https://regencycafe.co.uk', '_blank')">
+                <div class="proj-title">Regency Cafe</div>
+                <div class="proj-desc">Web • 2026</div>
+                <div class="video-container gs-up">
+                    <video autoplay muted loop playsinline webkit-playsinline>
+                        <source src="https://anmolcheema836.github.io/creative/assets/regency.mp4" type="video/mp4">
+                    </video>
+                    <div class="view-project-btn">View Project</div>
+                </div>
+            </div>
+
+            <div class="project-wrapper right" onclick="window.open('https://atalaykebab.co.uk', '_blank')">
+                <div class="proj-title">Atalay Kebab</div>
+                <div class="proj-desc">Web • 2026</div>
+                <div class="video-container gs-up">
+                    <video autoplay muted loop playsinline webkit-playsinline>
+                        <source src="https://anmolcheema836.github.io/creative/assets/atalay.mp4" type="video/mp4">
+                    </video>
+                    <div class="view-project-btn">View Project</div>
+                </div>
+            </div>
+
+            <div class="project-wrapper left" onclick="window.open('https://thirtysixstudio-livid.vercel.app/', '_blank')">
+                <div class="proj-title">Thirty Six Studio</div>
+                <div class="proj-desc">Motion • 2026</div>
+                <div class="video-container gs-up">
+                    <video autoplay muted loop playsinline webkit-playsinline>
+                        <source src="https://anmolcheema836.github.io/creative/assets/websiteexample1.mp4" type="video/mp4">
+                    </video>
+                    <div class="view-project-btn">View Project</div>
+                </div>
+            </div>
+
+            <div class="project-wrapper right" onclick="window.open('https://anmolcheema836.github.io/duo-studio/', '_blank')">
+                <div class="proj-title">Duo Studio</div>
+                <div class="proj-desc">Creative • 2026</div>
+                <div class="video-container gs-up">
+                    <video autoplay muted loop playsinline webkit-playsinline>
+                        <source src="https://anmolcheema836.github.io/creative/assets/duostudio.mp4" type="video/mp4">
+                    </video>
+                    <div class="view-project-btn">View Project</div>
+                </div>
+            </div>
+
+            <div class="project-wrapper left" onclick="window.open('https://anmolcheema836.github.io/rejouice/', '_blank')">
+                <div class="proj-title">Rejouice</div>
+                <div class="proj-desc">Design • 2026</div>
+                <div class="video-container gs-up">
+                    <video autoplay muted loop playsinline webkit-playsinline>
+                        <source src="https://anmolcheema836.github.io/creative/assets/rejouice.mp4" type="video/mp4">
+                    </video>
+                    <div class="view-project-btn">View Project</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="statement-section">
+        <p class="statement-text anim-words" id="statement-text">
+            "The web is loud, and most brands just blend into it. I work across design, development, and branding all at once, building digital experiences that feel as sharp as they look. Nothing gets handed off between teams or lost in translation, because I build every layer myself. That's how the identity we create together actually holds up once it's live. If your brand deserves to be seen, let's make sure people can't look away."
+        </p>
+    </section>
+
+    <section class="services-section">
+        <div class="section-label anim-words">(SERVICES)</div>
+        
+        <div class="services-staircase">
+            <div class="service-row left">
+                <div class="service-title-container">
+                    <span class="anim-letters">ART DIRECTION</span>
+                    <div class="service-img-wrapper">
+                        ( <img src="https://images.pexels.com/photos/196645/pexels-photo-196645.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Art Direction"> )
+                    </div>
+                </div>
+                <div class="service-desc">VISUAL STRATEGY · CREATIVE CONCEPT · ART SUPERVISION</div>
+            </div>
+
+            <div class="service-row right">
+                <div class="service-title-container">
+                    <span class="anim-letters">BRANDING</span>
+                    <div class="service-img-wrapper">
+                        ( <img src="https://images.pexels.com/photos/1337380/pexels-photo-1337380.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Branding"> )
+                    </div>
+                </div>
+                <div class="service-desc">BRAND IDENTITY · LOGO DESIGN · VISUAL LANGUAGE</div>
+            </div>
+
+            <div class="service-row left">
+                <div class="service-title-container">
+                    <span class="anim-letters">DIGITAL DESIGN</span>
+                    <div class="service-img-wrapper">
+                        ( <img src="https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Digital Design"> )
+                    </div>
+                </div>
+                <div class="service-desc">UI/UX DESIGN · PROTOTYPING · DESIGN SYSTEMS</div>
+            </div>
+
+            <div class="service-row right">
+                <div class="service-title-container">
+                    <span class="close-btn">(close)</span>
+                    <span class="anim-letters">DEVELOPMENT</span>
+                    <div class="service-img-wrapper">
+                        ( <img src="https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Development"> )
+                    </div>
+                </div>
+                <div class="service-desc">FRONTEND DEVELOPMENT · REACT / NEXT.JS · RESPONSIVE DESIGN</div>
+            </div>
+        </div>
+
+        <div class="creator-text anim-words">
+            I'm not a founder, a CEO, or a strategist hiding behind a title. I'm just a creator. Someone who designs, builds, and thinks in equal measure, and uses that to walk brands through every stage of their growth, from the first idea on a blank page to the moment a finished site goes live. I'm not here to chase trends or pile on deliverables. I'm here to take what makes a brand itself and bring it into the digital world with the care it deserves. Work that lifts the brand it belongs to, not just decorates it.
+        </div>
+    </section>
+
+    <footer id="contact" class="footer">
+        <p class="footer-top-text anim-words">FOR ENQUIRIES, COLLABORATION REQUESTS OR JOB OPPORTUNITIES, DON'T HESITATE TO REACH OUT!</p>
+        
+        <h2 class="footer-giant-title anim-letters">GET IN TOUCH</h2>
+        
+        <div class="footer-divider"></div>
+        
+        <div class="footer-contacts-row">
+            <a href="mailto:anmolcheema988@gmail.com" class="email-link anim-words">anmolcheema988@gmail.com</a>
+            <a href="tel:+918360552306" class="phone-link anim-words">+91 83605 52306</a> 
+        </div>
+
+        <div class="footer-divider"></div>
+        
+        <div class="footer-bottom">
+            <p class="anim-words">©2026 ANMOL CHEEMA</p>
+            <nav class="footer-nav">
+                <a target="_blank" rel="noopener noreferrer" href="https://github.com/anmolcheema836/" class="anim-words">GITHUB</a>
+                <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/anmolsinghcheema/" class="anim-words">LINKEDIN</a>
+                <a target="_blank" rel="noopener noreferrer" href="https://instagram.com/anmolcheema" class="anim-words">@ANMOLCHEEMA</a>
+            </nav>
+            <p class="anim-words">DESIGNED & DEVELOPED BY ANMOL CHEEMA</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+            const ist = new Date(utc + (3600000 * 5.5));
+            
+            let hours = ist.getHours().toString().padStart(2, '0');
+            let minutes = ist.getMinutes().toString().padStart(2, '0');
+            let seconds = ist.getSeconds().toString().padStart(2, '0');
+            
+            const clockEl = document.getElementById('ist-clock');
+            if(clockEl) clockEl.innerText = `${hours}:${minutes}:${seconds} IST`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            gestureDirection: 'vertical',
+            smooth: true,
+        });
+
+        gsap.registerPlugin(ScrollTrigger);
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time)=>{ lenis.raf(time * 1000) });
+        gsap.ticker.lagSmoothing(0);
+
+        function animateText() {
+            document.querySelectorAll('.anim-letters').forEach(el => {
+                let text = el.innerText;
+                el.innerHTML = '';
+                text.split('').forEach(char => {
+                    if(char === ' ') {
+                        let space = document.createElement('span');
+                        space.className = 'space-char';
+                        space.innerHTML = '&nbsp;';
+                        el.appendChild(space);
+                    } else {
+                        let wrap = document.createElement('span');
+                        wrap.className = 'char-wrap';
+                        let inner = document.createElement('span');
+                        inner.className = 'char-inner';
+                        inner.innerText = char;
+                        wrap.appendChild(inner);
+                        el.appendChild(wrap);
+                    }
+                });
+
+                gsap.to(el.querySelectorAll('.char-inner'), {
+                    y: "0%",
+                    duration: 0.8,
+                    stagger: 0.02,
+                    ease: "power4.out",
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top 95%",
+                        toggleActions: "play none none none"
+                    }
+                });
+            });
+
+            document.querySelectorAll('.anim-words').forEach(el => {
+                let words = el.innerText.trim().split(/\s+/);
+                el.innerHTML = '';
+                words.forEach(word => {
+                    let wrap = document.createElement('span');
+                    wrap.className = 'word-wrap';
+                    let inner = document.createElement('span');
+                    inner.className = 'word-inner';
+                    inner.innerHTML = word + '&nbsp;'; 
+                    wrap.appendChild(inner);
+                    el.appendChild(wrap);
+                });
+
+                gsap.to(el.querySelectorAll('.word-inner'), {
+                    y: "0%",
+                    duration: 1,
+                    stagger: 0.03,
+                    ease: "power4.out",
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top 95%",
+                        toggleActions: "play none none none"
+                    }
+                });
+            });
+        }
+        
+        animateText();
+
+        document.querySelectorAll('.gs-up').forEach(el => {
+            gsap.fromTo(el, 
+                { y: 50, opacity: 0 },
+                { y: 0, opacity: 1, duration: 1, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 90%" }}
+            );
+        });
+
+        gsap.to('.wrapper-1', { xPercent: -10, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 1 }});
+        gsap.to('.wrapper-2', { xPercent: 10, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 1 }});
+        gsap.to('.wrapper-3', { xPercent: -10, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 1 }});
+
+        const workBg = document.querySelector('.work-bg-text');
+        const projects = document.querySelectorAll('.project-wrapper');
+        
+        projects.forEach(proj => {
+            proj.addEventListener('mouseenter', () => { workBg.style.opacity = '0'; });
+            proj.addEventListener('mouseleave', () => { workBg.style.opacity = '1'; });
+        });
+
+        const serviceRows = document.querySelectorAll('.service-row');
+        
+        serviceRows.forEach(row => {
+            const imgTrigger = row.querySelector('.service-img-wrapper');
+            const closeBtn = row.querySelector('.close-btn');
+
+            if(imgTrigger) {
+                imgTrigger.addEventListener('click', () => {
+                    const isActive = row.classList.contains('active');
+                    
+                    serviceRows.forEach(otherRow => {
+                        otherRow.classList.remove('active');
+                    });
+
+                    if (!isActive) {
+                        row.classList.add('active');
+                    }
+                });
+            }
+
+            if (closeBtn) {
+                closeBtn.style.pointerEvents = 'auto';
+                closeBtn.style.cursor = 'pointer';
+                closeBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    row.classList.remove('active');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
