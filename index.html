@@ -199,10 +199,10 @@
 
         @keyframes marquee {
             0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+          100% { transform: translateX(-50%); }
         }
 
-        /* Refined Hero Image with Masked Transparency */
+        /* Refined Hero Image with Masked Transparency & RGB Pixel Break Hover */
         .hero-center-img {
             position: absolute;
             top: 25%;
@@ -233,26 +233,73 @@
             opacity: 0;
             transition: opacity 0.4s ease;
             pointer-events: none;
+            z-index: 10;
         }
 
-        .hero-center-img img {
+        .hero-center-img:hover { opacity: 1; }
+        .hero-center-img:hover::after { opacity: 1; }
+        
+        .base-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             filter: grayscale(100%);
             transition: filter 0.4s ease;
+            position: absolute;
+            inset: 0;
         }
 
-        .hero-center-img:hover {
-            opacity: 1; 
+        .hero-center-img:hover .base-img { filter: grayscale(0%); }
+
+        /* Glitch & RGB Split Animation Layers */
+        .glitch-layer {
+            position: absolute;
+            inset: 0;
+            background-image: url('profile.png');
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            pointer-events: none;
+            mix-blend-mode: screen;
+            z-index: 5;
         }
 
-        .hero-center-img:hover::after {
-            opacity: 1;
+        .glitch-layer-1 {
+            background-color: rgba(255, 0, 0, 0.4);
+            background-blend-mode: multiply;
         }
-        
-        .hero-center-img:hover img {
-            filter: grayscale(0%);
+
+        .glitch-layer-2 {
+            background-color: rgba(0, 255, 255, 0.4);
+            background-blend-mode: multiply;
+        }
+
+        .hero-center-img:hover .glitch-layer { opacity: 1; }
+
+        .hero-center-img:hover .glitch-layer-1 {
+            animation: pixelBreak1 0.25s infinite linear alternate-reverse;
+        }
+
+        .hero-center-img:hover .glitch-layer-2 {
+            animation: pixelBreak2 0.3s infinite linear alternate-reverse;
+        }
+
+        @keyframes pixelBreak1 {
+            0% { clip-path: inset(10% -10% 80% -10%); transform: translate(-5px, 2px); }
+            20% { clip-path: inset(80% -10% 5% -10%); transform: translate(5px, -2px); }
+            40% { clip-path: inset(30% -10% 50% -10%); transform: translate(-5px, 2px); }
+            60% { clip-path: inset(70% -10% 15% -10%); transform: translate(5px, -2px); }
+            80% { clip-path: inset(20% -10% 60% -10%); transform: translate(-5px, 2px); }
+            100% { clip-path: inset(50% -10% 30% -10%); transform: translate(5px, -2px); }
+        }
+
+        @keyframes pixelBreak2 {
+            0% { clip-path: inset(20% -10% 60% -10%); transform: translate(5px, -2px); }
+            20% { clip-path: inset(60% -10% 10% -10%); transform: translate(-5px, 2px); }
+            40% { clip-path: inset(5% -10% 80% -10%); transform: translate(5px, -2px); }
+            60% { clip-path: inset(50% -10% 20% -10%); transform: translate(-5px, 2px); }
+            80% { clip-path: inset(15% -10% 70% -10%); transform: translate(5px, -2px); }
+            100% { clip-path: inset(40% -10% 40% -10%); transform: translate(-5px, 2px); }
         }
 
         /* Hero Meta Bar (Time & Status) */
@@ -396,28 +443,66 @@
             background: #ddd;
         }
 
-        .proj-title, .proj-desc {
+        .proj-title {
             position: absolute;
-            font-size: 1.1rem;
-            font-weight: 500;
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            white-space: nowrap;
             opacity: 0;
             transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             pointer-events: none;
             color: var(--text-color);
             letter-spacing: 0.5px;
+            line-height: 1;
         }
-
-        .proj-title {
-            top: -2.5rem;
-            left: 0;
-            transform: translateY(20px);
-        }
-
+        
         .proj-desc {
-            top: 2rem;
-            left: -3rem;
-            transform: rotate(-90deg) translateX(-20px);
-            transform-origin: left top;
+            position: absolute;
+            font-size: 1.1rem;
+            font-weight: 500;
+            white-space: nowrap;
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+            color: #555;
+            letter-spacing: 0.5px;
+        }
+
+        /* Side placements depending on video position */
+        .project-wrapper.left .proj-title {
+            top: 40%;
+            left: 105%;
+            transform: translateY(-50%) translateX(-20px);
+        }
+        .project-wrapper.left .proj-desc {
+            top: 55%;
+            left: 105%;
+            transform: translateY(-50%) translateX(-20px);
+        }
+        .project-wrapper.left:hover .proj-title,
+        .project-wrapper.left:hover .proj-desc {
+            opacity: 1;
+            transform: translateY(-50%) translateX(0);
+        }
+
+        .project-wrapper.right .proj-title {
+            top: 40%;
+            right: 105%;
+            text-align: right;
+            transform: translateY(-50%) translateX(20px);
+        }
+        .project-wrapper.right .proj-desc {
+            top: 55%;
+            right: 105%;
+            text-align: right;
+            transform: translateY(-50%) translateX(20px);
+        }
+        .project-wrapper.right:hover .proj-title,
+        .project-wrapper.right:hover .proj-desc {
+            opacity: 1;
+            transform: translateY(-50%) translateX(0);
         }
 
         .view-project-btn {
@@ -436,8 +521,6 @@
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .project-wrapper:hover .proj-title { opacity: 1; transform: translateY(0); }
-        .project-wrapper:hover .proj-desc { opacity: 1; transform: rotate(-90deg) translateX(0); }
         .project-wrapper:hover .view-project-btn { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 
         /* ==========================================
@@ -668,7 +751,7 @@
                 top: 50%; 
                 opacity: 1; /* Always fully visible on mobile */
             }
-            .hero-center-img img { filter: grayscale(0%); } /* Always full color on mobile */
+            .base-img { filter: grayscale(0%); } /* Always full color on mobile */
             .hero-center-img::after { opacity: 0 !important; } /* Prevent hover backdrop mask */
             
             .hero-meta { 
@@ -704,10 +787,14 @@
                 transform: none !important;
                 top: auto !important;
                 left: auto !important;
+                right: auto !important;
+                text-align: left !important;
                 margin-top: 0.8rem;
+                font-size: 2rem !important; /* adjust for mobile */
             }
             .proj-desc {
                 margin-top: 0.2rem;
+                font-size: 1rem !important;
                 color: #555;
             }
             .view-project-btn { display: none; } /* Mobile relies on full card tap */
@@ -802,9 +889,11 @@
         </div>
 
         <div class="hero-image-wrapper">
-            <div class="hero-center-img gs-up" data-intro="portrait" style="clip-path: inset(0%);">
-                <img alt="Anmol Cheema Portrait" fetchpriority="high" decoding="async" data-nimg="fill" style="position:absolute;height:100%;width:100%;left:0;top:0;right:0;bottom:0;object-fit:cover;color:transparent" src="profile.png">
-                <canvas style="position: absolute; inset: 0px; width: 100%; height: 100%; opacity: 0; pointer-events: none;"></canvas>
+            <div class="hero-center-img gs-up" data-intro="portrait">
+                <img alt="Anmol Cheema Portrait" class="base-img" fetchpriority="high" decoding="async" src="profile.png">
+                <!-- Pixel Break RGB Split Layers -->
+                <div class="glitch-layer glitch-layer-1"></div>
+                <div class="glitch-layer glitch-layer-2"></div>
             </div>
         </div>
 
@@ -905,43 +994,43 @@
         <div class="services-staircase">
             <div class="service-row left">
                 <div class="service-title-container">
-                    <span class="anim-letters">ART DIRECTION</span>
+                    <span class="anim-letters">UI DESIGN</span>
                     <div class="service-img-wrapper">
-                        ( <img src="https://images.pexels.com/photos/196645/pexels-photo-196645.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Art Direction"> )
+                        ( <img src="https://images.pexels.com/photos/196645/pexels-photo-196645.jpeg?auto=compress&cs=tinysrgb&w=400" alt="UI Design"> )
                     </div>
                 </div>
-                <div class="service-desc">VISUAL STRATEGY · CREATIVE CONCEPT · ART SUPERVISION</div>
+                <div class="service-desc">VISUAL STRATEGY · INTERFACE LAYOUTS · DESIGN SYSTEMS</div>
             </div>
 
             <div class="service-row right">
                 <div class="service-title-container">
-                    <span class="anim-letters">BRANDING</span>
+                    <span class="anim-letters">UX RESEARCH</span>
                     <div class="service-img-wrapper">
-                        ( <img src="https://images.pexels.com/photos/1337380/pexels-photo-1337380.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Branding"> )
+                        ( <img src="https://images.pexels.com/photos/1337380/pexels-photo-1337380.jpeg?auto=compress&cs=tinysrgb&w=400" alt="UX Research"> )
                     </div>
                 </div>
-                <div class="service-desc">BRAND IDENTITY · LOGO DESIGN · VISUAL LANGUAGE</div>
+                <div class="service-desc">USER FLOWS · WIREFRAMING · PROTOTYPING</div>
             </div>
 
             <div class="service-row left">
                 <div class="service-title-container">
-                    <span class="anim-letters">DIGITAL DESIGN</span>
+                    <span class="anim-letters">FRONTEND DEV</span>
                     <div class="service-img-wrapper">
-                        ( <img src="https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Digital Design"> )
+                        ( <img src="https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Frontend Dev"> )
                     </div>
                 </div>
-                <div class="service-desc">UI/UX DESIGN · PROTOTYPING · DESIGN SYSTEMS</div>
+                <div class="service-desc">REACT / NEXT.JS · CREATIVE CODING · ANIMATIONS</div>
             </div>
 
             <div class="service-row right">
                 <div class="service-title-container">
                     <span class="close-btn">(close)</span>
-                    <span class="anim-letters">DEVELOPMENT</span>
+                    <span class="anim-letters">BACKEND DEV</span>
                     <div class="service-img-wrapper">
-                        ( <img src="https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Development"> )
+                        ( <img src="https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Backend Dev"> )
                     </div>
                 </div>
-                <div class="service-desc">FULL STACK DEVELOPMENT · REACT / NEXT.JS · RESPONSIVE DESIGN</div>
+                <div class="service-desc">NODE.JS · DATABASE ARCHITECTURE · API INTEGRATION</div>
             </div>
         </div>
 
